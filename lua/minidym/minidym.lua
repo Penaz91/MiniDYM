@@ -44,21 +44,23 @@ function MiniDym.get_matching_files()
 end
 
 function MiniDym.DYMHandle(item)
+    -- Save the empty buffer number for later removal
+    local empty_buffer_nr = vim.fn.bufnr("%")
+    -- Edit the selected file, this will open a new buffer
     vim.api.nvim_command("e " .. item)
+    -- Remove the unused buffer
+    vim.api.nvim_command("silent bd " .. empty_buffer_nr)
 end
 
 function MiniDym.dym()
     -- Check if file is readable, it may have been handled by another BufNewFile event
-    print("Starting DYM")
     if vim.fn.filereadable(vim.fn.expand("%")) == 1 then
         return
     end
 
-    print("File not handled, looking for matching files")
     -- If not, we are going to find files that may be what the user meant
     local result = MiniDym.get_matching_files()
     if #result ~= 0 then
-        print("Starting UI")
         vim.ui.select(
             result,
             {prompt="Did you mean: "},
@@ -69,7 +71,6 @@ function MiniDym.dym()
             end
         )
     else
-        print("No results, leaving new buffer")
         return
     end
 end
