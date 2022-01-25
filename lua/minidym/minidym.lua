@@ -24,6 +24,10 @@ MiniDym.config = {
     prompt = "Did you mean: "
 }
 
+function MiniDym.get_filename_from_path(filename)
+      return filename:match("^.+/(.+)$")
+end
+
 function MiniDym.get_matching_files()
     local matching_files = vim.fn.split(
         vim.fn.glob(
@@ -36,7 +40,7 @@ function MiniDym.get_matching_files()
         matching_files = vim.fn.split(
             vim.fn.glob(
                 vim.fn.expand("%") .. "*",
-                0
+                1
             ),
             "\n"
         )
@@ -48,7 +52,7 @@ function MiniDym.DYMHandle(item)
     -- Save the empty buffer number for later removal
     local empty_buffer_nr = vim.fn.bufnr("%")
     -- Edit the selected file, this will open a new buffer
-    vim.api.nvim_command("e " .. item)
+    vim.api.nvim_command("e " .. MiniDym.get_filename_from_path(item))
     -- Remove the unused buffer
     vim.api.nvim_command("silent bd " .. empty_buffer_nr)
 end
