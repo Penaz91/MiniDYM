@@ -20,7 +20,8 @@ function MiniDym.setup(config)
 end
 
 MiniDym.config = {
-    -- Nothing for now
+    -- For now it's just the prompt
+    prompt = "Did you mean: "
 }
 
 function MiniDym.get_matching_files()
@@ -63,7 +64,7 @@ function MiniDym.dym()
     if #result ~= 0 then
         vim.ui.select(
             result,
-            {prompt="Did you mean: "},
+            {prompt=MiniDym.config.prompt},
             function(item, _)
                 if item then
                     MiniDym.DYMHandle(item)
