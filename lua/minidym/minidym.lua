@@ -52,7 +52,13 @@ function MiniDym.DYMHandle(item)
     -- Save the empty buffer number for later removal
     local empty_buffer_nr = vim.fn.bufnr("%")
     -- Edit the selected file, this will open a new buffer
-    vim.api.nvim_command("e " .. MiniDym.get_filename_from_path(item))
+    local filename = nil
+    if string.find(item, "/") then
+        filename = MiniDym.get_filename_from_path(item)
+    else
+        filename = item
+    end
+    vim.api.nvim_command("e " .. filename)
     -- Remove the unused buffer
     vim.api.nvim_command("silent bd " .. empty_buffer_nr)
 end
