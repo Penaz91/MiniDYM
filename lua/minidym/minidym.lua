@@ -15,7 +15,7 @@ function MiniDym.setup(config)
     -- Enable VimBufEnter events
     vim.cmd([[augroup minidym]])
     vim.cmd([[autocmd!]])
-    vim.cmd([[autocmd VimEnter * lua MiniDym.dym()]])
+    vim.cmd([[autocmd BufNewFile * lua MiniDym.dym()]])
     vim.cmd([[augroup END]])
 end
 
