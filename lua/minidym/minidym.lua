@@ -13,10 +13,18 @@ function MiniDym.setup(config)
     H.apply_config(config)
 
     -- Enable VimBufEnter events
-    vim.cmd([[augroup minidym]])
-    vim.cmd([[autocmd!]])
-    vim.cmd([[autocmd BufNewFile * lua MiniDym.dym()]])
-    vim.cmd([[augroup END]])
+    vim.api.nvim_create_augroup("minidym", {})
+    vim.api.nvim_create_autocmd(
+        {"BufNewFile"},
+        {
+            group="minidym",
+            pattern="*",
+            callback=function()
+                MiniDym.dym()
+            end,
+            desc=[[Shows a "Did You mean...?" UI with possible file names the user might want to open]]
+        }
+    )
 end
 
 MiniDym.config = {
