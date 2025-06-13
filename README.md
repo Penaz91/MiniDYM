@@ -1,7 +1,7 @@
 MiniDYM
 =======
 
-A very small "did you mean?" plugin. Also a rewrite of my [fzf_dym](https://github.com/Penaz91/fzf_dym) plugin
+A very small "did you mean?" plugin for Neovim. Also a rewrite of my [fzf_dym](https://github.com/Penaz91/fzf_dym) plugin.
 
 Installing
 -----------
