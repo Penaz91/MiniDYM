@@ -66,9 +66,9 @@ function MiniDym.DYMHandle(item)
     else
         filename = item
     end
-    vim.api.nvim_cmd({cmd="e", args={filename}}, {output=false})
+    vim.api.nvim_cmd({cmd="e", args={filename}, mods={silent=true}}, {output=false})
     -- Remove the unused buffer
-    vim.api.nvim_cmd({cmd="bd", args={empty_buffer_nr}}, {output=false})
+    vim.api.nvim_cmd({cmd="bd", args={empty_buffer_nr}, mods={silent=true}}, {output=false})
 end
 
 function MiniDym.dym()
