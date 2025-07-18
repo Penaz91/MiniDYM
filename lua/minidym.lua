@@ -28,8 +28,10 @@ function MiniDym.setup(config)
 end
 
 MiniDym.config = {
-    -- For now it's just the prompt
-    prompt = "Did you mean: "
+    -- Prompt shown to the user
+    prompt = "Did you mean: ",
+    -- Force filetype re-detection
+    redetect_ft = false,
 }
 
 function MiniDym.get_filename_from_path(filename)
@@ -69,6 +71,11 @@ function MiniDym.DYMHandle(item)
     vim.api.nvim_cmd({cmd="e", args={filename}, mods={silent=true}}, {output=false})
     -- Remove the unused buffer
     vim.api.nvim_cmd({cmd="bd", args={empty_buffer_nr}, mods={silent=true}}, {output=false})
+    -- Re-detect filetype
+    if MiniDym.config.redetect_ft then
+        local ft = vim.filetype.match({buf = 0})
+        vim.bo.filetype = ft
+    end
 end
 
 function MiniDym.dym()
