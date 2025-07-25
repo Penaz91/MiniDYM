@@ -78,13 +78,7 @@ function MiniDym.DYMHandle(item)
     end
 end
 
-function MiniDym.dym()
-    -- Check if file is readable, it may have been handled by another BufNewFile event
-    if vim.fn.filereadable(vim.fn.expand("%")) == 1 then
-        return
-    end
-
-    -- If not, we are going to find files that may be what the user meant
+function MiniDym.show_ui()
     local result = MiniDym.get_matching_files()
     if #result ~= 0 then
         vim.ui.select(
@@ -99,6 +93,16 @@ function MiniDym.dym()
     else
         return
     end
+end
+
+function MiniDym.dym()
+    -- Check if file is readable, it may have been handled by another BufNewFile event
+    if vim.fn.filereadable(vim.fn.expand("%")) == 1 then
+        return
+    end
+
+    -- If not, we are going to find files that may be what the user meant
+    vim.schedule(MiniDym.show_ui)
 end
 
 H.default_config = MiniDym.config
