@@ -109,7 +109,7 @@ H.default_config = MiniDym.config
 
 function H.setup_config(config)
     -- Basic config validation
-    vim.validate({ config = {config, 'table', true}})
+    vim.validate('config', config, 'table', true)
     -- Extend default config with custom
     config = vim.tbl_deep_extend('force', H.default_config, config or {})
 
