@@ -34,10 +34,6 @@ MiniDym.config = {
     redetect_ft = false,
 }
 
-function MiniDym.get_filename_from_path(filename)
-      return filename:match("^.+/(.+)$")
-end
-
 function MiniDym.get_matching_files()
     local matching_files = vim.fn.split(
         vim.fn.glob(
@@ -62,13 +58,7 @@ function MiniDym.DYMHandle(item)
     -- Save the empty buffer number for later removal
     local empty_buffer_nr = vim.fn.bufnr("%")
     -- Edit the selected file, this will open a new buffer
-    local filename = nil
-    if string.find(item, "/") then
-        filename = MiniDym.get_filename_from_path(item)
-    else
-        filename = item
-    end
-    vim.api.nvim_cmd({cmd="e", args={filename}, mods={silent=true}}, {output=false})
+    vim.api.nvim_cmd({cmd="e", args={item}, mods={silent=true}}, {output=false})
     -- Remove the unused buffer
     vim.api.nvim_cmd({cmd="bd", args={empty_buffer_nr}, mods={silent=true}}, {output=false})
     -- Re-detect filetype
